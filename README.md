@@ -1,7 +1,7 @@
 **npm install**</br>
 **docker compose up -d**</br>
-mongodb://[username]:[password]@localhost:27017/?authSource=admin</br>
-[username]:[password] see in docker-compose.yml</br>
+**mongodb://[username]:[password]@localhost:27017/?authSource=admin**</br>
+**[username]:[password] see in docker-compose.yml**</br>
 
 **IT'S IMPORTANT**</br>
 create .emv in root project folder</br>
