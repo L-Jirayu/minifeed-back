@@ -6,7 +6,7 @@
 **IT'S IMPORTANT**</br>
 create .emv in root project folder</br>
 and copy that</br>
-"JWT_SECRET=yoursecretkey"</br>
+**JWT_SECRET=yoursecretkey**</br>
 and save</br>
 
 ------------------------------------------------------------------------------------------
