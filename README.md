@@ -1,9 +1,30 @@
-**npm install**</br>
-**docker compose up -d**</br>
-**mongodb://[username]:[password]@localhost:27017/?authSource=admin**</br>
-**[username]:[password] see in docker-compose.yml**</br>
+# Authentication Backend
+## Concept
 
-**IT'S IMPORTANT**</br>
+For study about Backend Development (Authentication Concept), use API for connect to Frontend and save data in Database
+
+-----------------------------------------------------------------------------------------------------</br>
+
+## Tools
+
+Framework of NodeJS to have name is **NestJS**,</br>
+**RESTFul API** for connect to Frontend part</br>
+**Docker** for connect to Database part</br>
+**MongoDB** for Database</br>
+
+-----------------------------------------------------------------------------------------------------</br>
+
+## Setup
+
+1.install NodeJS: https://nodejs.org/en/download/current</br>
+2.use git for clone</br>
+3.**npm install** for all npm it has. and **docker compose up -d** for connect to Docker</br>
+4.Setup MongoDB Compass and connection **mongodb://[username]:[password]@localhost:27017/?authSource=admin**
+5.**npm run start:dev** for run
+
+P.S. [username]:[password] see in docker-compose.yml
+
+### IT'S IMPORTANT
 create .emv in root project folder</br>
 and copy that</br>
 **JWT_SECRET=yoursecretkey**</br>
