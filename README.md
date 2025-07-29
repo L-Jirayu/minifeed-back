@@ -3,7 +3,7 @@
 
 For study about Backend Development (Authentication Concept), use API for connect to Frontend and save data in Database
 
------------------------------------------------------------------------------------------------------</br>
+------------------------------------------------------------------------------------------
 
 ## Tools
 
@@ -12,7 +12,7 @@ Framework of NodeJS to have name is **NestJS**,</br>
 **Docker** for connect to Database part</br>
 **MongoDB** for Database</br>
 
------------------------------------------------------------------------------------------------------</br>
+------------------------------------------------------------------------------------------
 
 ## Setup
 
