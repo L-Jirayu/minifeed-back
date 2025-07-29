@@ -7,7 +7,7 @@ For study about Backend Development (Authentication Concept), use API for connec
 
 ## Tools
 
-Framework of NodeJS to have name is **NestJS**,</br>
+Framework of NodeJS to have name is **NestJS**</br>
 **RESTFul API** for connect to Frontend part</br>
 **Docker** for connect to Database part</br>
 **MongoDB** for Database</br>
