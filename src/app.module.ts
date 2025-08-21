@@ -18,7 +18,7 @@ import { PostandupModule } from './postandup/postandup.module';
     MongooseModule.forRoot(`mongodb://localhost:27017`, {
       user: 'root',
       pass: 'example',
-      dbName: 'authen',
+      dbName: 'mini-feed',
     }),
     
     AuthModule, 
