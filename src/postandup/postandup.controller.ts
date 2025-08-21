@@ -1,57 +1,78 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-  UploadedFile,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param, UseGuards, Request, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { PostandupService } from './postandup.service';
 import { CreatePostandupDto } from './dto/create-postandup.dto';
 import { UpdatePostandupDto } from './dto/update-postandup.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth-guard';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 
 @Controller('postandup')
-@UseGuards(JwtAuthGuard)
 export class PostandupController {
-  constructor(private readonly postandupService: PostandupService) {}
+  constructor(private readonly postService: PostandupService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './uploads',
+        filename: (_, file, cb) => {
+          const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+          cb(null, uniqueSuffix + extname(file.originalname));
+        },
+      }),
+    }),
+  )
   create(
-    @Body() createPostandupDto: CreatePostandupDto,
+    @Body() createDto: CreatePostandupDto,
+    @Request() req,
     @UploadedFile() file?: Express.Multer.File,
   ) {
-    return this.postandupService.create(createPostandupDto, file);
+    console.log('===== POST /postandup =====');
+    console.log('req.user:', req.user); // ตรวจสอบ JWT guard
+    console.log('body:', createDto);   // ตรวจสอบ form-data ที่ส่งมา
+    console.log('file:', file);        // ตรวจสอบไฟล์ที่อัปโหลด
+    return this.postService.create(createDto, req.user.userId, file);
   }
+  
 
   @Get()
   findAll() {
-    return this.postandupService.findAll();
+    return this.postService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.postandupService.findOne(id);
+    return this.postService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './uploads',
+        filename: (_, file, cb) => {
+          const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+          cb(null, uniqueSuffix + extname(file.originalname));
+        },
+      }),
+    }),
+  )
   update(
     @Param('id') id: string,
-    @Body() updatePostandupDto: UpdatePostandupDto,
+    @Body() updateDto: UpdatePostandupDto,
+    @Request() req,
     @UploadedFile() file?: Express.Multer.File,
   ) {
-    return this.postandupService.update(id, updatePostandupDto, file);
+    return this.postService.update(id, updateDto, req.user.userId, file);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.postandupService.remove(id);
+  remove(@Param('id') id: string, @Request() req) {
+    return this.postService.remove(id, req.user.userId);
   }
 }
+

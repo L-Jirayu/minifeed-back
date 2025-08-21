@@ -20,7 +20,10 @@ export class AuthService {
   }
 
   async login(user: any) {
-    const payload = { email: user.email, sub: user.userId };
+    console.log('User object before signing JWT:', user);  // <-- เพิ่มตรงนี้
+    const userId = user._id?.toString() || user.id?.toString() || user.userId;
+    const payload = { email: user.email, sub: userId };
+    console.log('Signing JWT payload:', payload);           // <-- เพิ่มตรงนี้
     return {
       accessToken: this.jwtService.sign(payload),
     };
