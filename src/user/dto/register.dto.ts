@@ -1,7 +1,17 @@
-export class RegisterDto {
-    readonly email: string;
-    readonly password: string;
-    readonly name: string;
-    readonly tel: string;
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
+export class RegisterDto {
+  @IsEmail()
+  email: string;
+
+  @IsNotEmpty()
+  @IsString()
+  password: string;
+
+  @IsNotEmpty()
+  @IsString()
+  name: string;
+
+  @IsString()
+  tel: string;
 }
