@@ -1,4 +1,10 @@
 # Minifeed Backend
+## IMPORTANT
+
+This repository developed from "**pure-authen**" branch
+
+------------------------------------------------------------------------------------------
+
 ## Concept
 
 For study about Backend Development (Combine with authentication, CRUD and Upload file Concept), use API for connect to Frontend and save data in Database
