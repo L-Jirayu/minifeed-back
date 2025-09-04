@@ -14,11 +14,13 @@ export class AuthController {
   async login(@Request() req, @Res({ passthrough: true }) res) {
     const {accessToken} = await this.authService.login(req.user);
 
+    const isProd = process.env.NODE_ENV === 'production';
+
     res.cookie('access_token', accessToken, {
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: isProd ? 'none' : 'lax',
       path: '/', 
-      secure: false,
+      secure: isProd,
     });
     return {
       message: 'Login successful',
@@ -28,9 +30,11 @@ export class AuthController {
   @Post('logout')
   @UseGuards(AuthGuard('jwt'))
     logout(@Res({ passthrough: true }) res: Response) {
-    res.clearCookie('access_token');
-    return { 
-      message: 'Logged out' 
-    };
+    res.clearCookie('access_token', {
+      path: '/',
+      sameSite: 'none',
+      secure: process.env.NODE_ENV === 'production',
+    });
+    return { message: 'Logged out' };
   }
 }
