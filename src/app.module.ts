@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { AppController } from './app.controller';
@@ -15,14 +15,25 @@ import { PostandupModule } from './postandup/postandup.module';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    MongooseModule.forRoot(`mongodb://localhost:27017`, {
-      user: 'root',
-      pass: 'example',
-      dbName: 'mini-feed',
+
+    // MongooseModule.forRoot(`mongodb://localhost:27017`, {
+    //   user: 'root',
+    //   pass: 'example',
+    //   dbName: 'mini-feed',
+    // }),
+
+    MongooseModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        uri: config.get<string>('MONGODB_URI')!,
+        dbName: 'minifeed',
+      }),
     }),
+
     
     AuthModule, 
-    UserModule, PostandupModule],
+    UserModule, 
+    PostandupModule],
   controllers: [AppController],
   providers: [AppService],
 })
